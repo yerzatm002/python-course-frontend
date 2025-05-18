@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack, Redirect } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
@@ -22,12 +22,14 @@ export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
 
   useEffect(() => {
-    if (fontsLoaded) {
-      fetchMe().finally(() => {
-        SplashScreen.hideAsync();
+    const load = async () => {
+      if (fontsLoaded) {
+        await fetchMe();
+        await SplashScreen.hideAsync();
         setAppReady(true);
-      });
-    }
+      }
+    };
+    load();
   }, [fontsLoaded]);
 
   if (!fontsLoaded || !appReady) {
@@ -38,20 +40,23 @@ export default function RootLayout() {
     );
   }
 
-  if (!token) {
-    return <Redirect href="/auth/login" />;
-  }
-
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="auth/login" options={{ title: 'Кіру' }} />
-        <Stack.Screen name="auth/register" options={{ title: 'Тіркелу' }} />
-        <Stack.Screen name="lessons/[id]" options={{ title: 'Сабақ' }} />
-        <Stack.Screen name="tasks/[id]" options={{ title: 'Тапсырма' }} />
-        <Stack.Screen name="game/index" options={{ title: 'Мини-ойын' }} />
-        <Stack.Screen name="+not-found" options={{ title: 'Табылмады' }} />
+        {!token ? (
+          <>
+            <Stack.Screen name="auth/login" options={{ title: 'Кіру' }} />
+            <Stack.Screen name="auth/register" options={{ title: 'Тіркелу' }} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="lessons/[id]" options={{ title: 'Сабақ' }} />
+            <Stack.Screen name="tasks/[id]" options={{ title: 'Тапсырма' }} />
+            <Stack.Screen name="game/index" options={{ title: 'Мини-ойын' }} />
+            <Stack.Screen name="+not-found" options={{ title: 'Табылмады' }} />
+          </>
+        )}
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
