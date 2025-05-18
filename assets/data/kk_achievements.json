@@ -1,0 +1,14 @@
+[
+  {
+    "id": "a1",
+    "title": "Бірінші қадам",
+    "description": "Алғашқы тапсырманы орында",
+    "conditionTaskId": "task1"
+  },
+  {
+    "id": "a2",
+    "title": "Тапсырма шебері",
+    "description": "3 тапсырманы орында",
+    "minTasks": 3
+  }
+]

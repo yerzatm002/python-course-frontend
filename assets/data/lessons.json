@@ -1,0 +1,20 @@
+[
+  {
+    "id": "lesson1",
+    "title": "Айнымалылар",
+    "summary": "Айнымалыларды қалай жасау керек?",
+    "content": "Python тілінде айнымалылар автоматты түрде жасалады...",
+    "image": "https://cdn-icons-png.flaticon.com/512/5968/5968350.png",
+    "duration": "5 мин",
+    "taskId": "task1"
+  },
+  {
+    "id": "lesson2",
+    "title": "Мәліметтер түрлері",
+    "summary": "int, str, list, dict деген не?",
+    "content": "Python тілінде мәліметтер түрлері өте маңызды...",
+    "image": "https://cdn-icons-png.flaticon.com/512/2721/2721297.png",
+    "duration": "7 мин",
+    "taskId": "task2"
+  }
+]

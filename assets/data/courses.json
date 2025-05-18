@@ -1,0 +1,18 @@
+[
+  {
+    "id": "course1",
+    "title": "Python тіліне кіріспе",
+    "description": "Синтаксис негіздері мен айнымалылар",
+    "image": "https://cdn-icons-png.flaticon.com/512/5968/5968350.png",
+    "level": "Бастапқы",
+    "lessons": ["lesson1", "lesson2"]
+  },
+  {
+    "id": "course2",
+    "title": "Мәліметтер түрлері",
+    "description": "Тізімдер, сөздіктер, жиындар",
+    "image": "https://cdn-icons-png.flaticon.com/512/2721/2721297.png",
+    "level": "Орта",
+    "lessons": ["lesson3", "lesson4", "lesson5"]
+  }
+]
