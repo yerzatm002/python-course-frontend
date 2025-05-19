@@ -9,6 +9,7 @@ type User = {
   name: string;
   email: string;
   avatar: string;
+  difficulty: string;
   xp: number;
   level: number;
   streak: number;
