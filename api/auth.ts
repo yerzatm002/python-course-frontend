@@ -31,6 +31,7 @@ export const login = async (email: string, password: string) => {
   const res = await axios.post('/auth/login', { email, password });
   const { token, user } = res.data;
   await useUserStore.getState().login(token, user);
+  return user;
 };
 
 /**

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Image } from 'react-native';
+import { View, FlatList, StyleSheet, Image, Linking } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Text, Card, Button, ActivityIndicator } from 'react-native-paper';
 import { getCourseWithLessons } from '../../api/courses';
@@ -13,6 +13,7 @@ export default function LessonsScreen() {
     getCourseWithLessons(id as string)
       .then(setCourse)
       .finally(() => setLoading(false));
+      console.log(course)
   }, [id]);
 
   if (loading) {
@@ -31,18 +32,44 @@ export default function LessonsScreen() {
         renderItem={({ item }) => (
           <Card style={styles.card} onPress={() => router.push(`/lessons/${item.id}`)}>
             <Card.Content style={styles.row}>
-              <Image source={{ uri: item.image || 'https://miro.medium.com/v2/resize:fit:700/0*CcMeQhYbQKUlLRq7.png' }} style={styles.image} />
+              <Image
+                source={{
+                  uri:
+                    item.image || 'https://miro.medium.com/v2/resize:fit:700/0*CcMeQhYbQKUlLRq7.png',
+                }}
+                style={styles.image}
+              />
 
               <View style={styles.info}>
                 <Text variant="titleMedium">{item.title}</Text>
-<Text variant="bodySmall" style={{ marginVertical: 4 }}>
-  {item.content}
-</Text>
+
+                {item.content && (
+                  <Text variant="bodySmall" style={{ marginVertical: 4 }}>
+                    {item.content.slice(0, 80)}...
+                  </Text>
+                )}
+
+                {item.material && (
+                  <Text variant="bodySmall" style={styles.material}>
+                    📄 Теория: {item.material.slice(0, 60)}...
+                  </Text>
+                )}
+
+                {item.videoUrl && (
+                  <Button
+                    compact
+                    mode="text"
+                    onPress={() => Linking.openURL(item.videoUrl)}
+                    style={{ paddingHorizontal: 0 }}
+                  >
+                    🎬 Видео сабаққа өту
+                  </Button>
+                )}
 
                 {item.taskId && (
                   <>
                     <Text variant="labelSmall" style={{ color: '#64748B' }}>
-                      Тапсырма бар
+                      ✅ Тапсырма бар
                     </Text>
                     <Button
                       mode="outlined"
@@ -71,4 +98,5 @@ const styles = StyleSheet.create({
   image: { width: 60, height: 60, borderRadius: 6, backgroundColor: '#e5e7eb' },
   info: { flex: 1 },
   button: { marginTop: 8, alignSelf: 'flex-start' },
+  material: { color: '#4B5563', fontSize: 12 },
 });

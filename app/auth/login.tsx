@@ -3,24 +3,38 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { router } from 'expo-router';
 import { login as loginApi } from '../../api/auth';
+import { useUserStore } from '../../store/user';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const { user } = useUserStore();
 
-  const handleLogin = async () => {
-    if (!email || !password) return;
-    try {
-      setLoading(true);
-      await loginApi(email, password);
-      router.replace('/');
-    } catch (err: any) {
-      Alert.alert('Қате', err?.response?.data?.error || 'Кіру сәтсіз аяқталды');
-    } finally {
-      setLoading(false);
+const handleLogin = async () => {
+  if (!email || !password) return;
+
+  try {
+    setLoading(true);
+    const loggedUser = await loginApi(email, password); // 👈 получаем user сразу
+
+    switch (loggedUser.role) {
+      case 'TEACHER':
+        router.replace('/(teacher)/my-courses');
+        break;
+      case 'ADMIN':
+        router.replace('/(admin)/users');
+        break;
+      default:
+        router.replace('/');
     }
-  };
+  } catch (err: any) {
+    Alert.alert('Қате', err?.response?.data?.error || 'Кіру сәтсіз аяқталды');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <View style={styles.container}>

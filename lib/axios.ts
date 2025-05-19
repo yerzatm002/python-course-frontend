@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://python-course-backend.onrender.com/api', // замени на production URL при необходимости
+  baseURL: 'https://python-app-backend-yrhw.onrender.com/api', // замени на production URL при необходимости
   headers: {
     'Content-Type': 'application/json',
   },

@@ -12,6 +12,7 @@ type User = {
   xp: number;
   level: number;
   streak: number;
+  role: 'STUDENT' | 'TEACHER' | 'ADMIN';
 };
 
 type UserStore = {
@@ -22,7 +23,7 @@ type UserStore = {
   fetchMe: () => Promise<void>;
 };
 
-// Кроссплатформенное хранилище
+// ✅ Универсальное хранилище
 const storage = {
   set: (key: string, value: string) =>
     Platform.OS === 'web'

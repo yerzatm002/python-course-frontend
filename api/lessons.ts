@@ -5,10 +5,12 @@ export const getLessonById = async (id: string) => {
   return res.data;
 };
 
+
 export const createLesson = async (data: {
   title: string;
   content: string;
-  taskId: string;
+  material?: string;
+  videoUrl?: string;
   courseId: string;
 }) => {
   const res = await axios.post('/lessons', data);

@@ -14,3 +14,12 @@ export const getLessonById = async (id: string) => {
   const res = await axios.get(`/lessons/${id}`);
   return res.data;
 };
+
+export const createCourse = async (course: {
+  title: string;
+  description: string;
+  imageUrl: string;
+}) => {
+  const res = await axios.post('/courses', course);
+  return res.data;
+};

@@ -15,3 +15,13 @@ export const submitTask = async (id: string, userId: string, answer: string) => 
   const res = await axios.post(`/tasks/${id}/submit`, { answer, userId });
   return res.data; // содержит: correct, output, expected, judge
 };
+
+export const createTask = async (data: {
+  title: string;
+  description: string;
+  expectedOutput: string;
+  lesson: { connect: { id: string } };
+}) => {
+  const res = await axios.post('/tasks', data);
+  return res.data;
+};
